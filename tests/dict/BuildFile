@@ -1,0 +1,27 @@
+testlibname = test_pyreflex
+DICT_FILES	      = $(LOCALTOP)/$(THISDIR)/testdict.h
+testdict_h_DICT_OPTS   = --reflex --select=$(LOCALTOP)/$(THISDIR)/testdict_selection.xml -c capabilities.cpp
+files += capabilities.cpp
+
+
+
+#### Copied from DictionaryGenerator/BuildFile, to override dependence
+#### on ReflectionBuilder
+<external ref=gccxml>
+
+
+dictfiles = $(patsubst %.h,%_dict.cpp,$(notdir $(DICT_FILES)))
+files += $(dictfiles)
+
+header_for_dict = $(filter %/$(patsubst %_dict.cpp,%.h,$(@F)),$(DICT_FILES))
+opts_for_dict   = $($(subst .,_,$(notdir $(header_for_dict)))_DICT_OPTS)
+lcgdict		= $(SEAL)/$(SCRAM_ARCH)/bin/lcgdict
+
+%_dict.cpp: $(DICT_FILES)
+	$(lcgdict) $(header_for_dict) --gccxmlpath=$(GCCXML_BASE)/bin $(opts_for_dict) $(CPPFLAGS)
+
+########################################################################
+
+<Use name=Dictionary/Reflex>
+
+

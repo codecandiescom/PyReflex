@@ -1,0 +1,13 @@
+<lcgdict>  
+  <class file_pattern = "*testdict.h" />
+  <function pattern = "NMF::*" />
+  <function pattern = "T::*" />
+  <function pattern = "global_function" />
+  <class pattern = "std::vector<*>" />
+  <exclusion>
+    <class name = "NotInDictionary" />
+    <class name = "upcast_through_not_in_dict::NotThere" />
+    <class pattern = "_*" />
+  </exclusion>
+</lcgdict>
+

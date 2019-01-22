@@ -1,0 +1,27 @@
+Reinstate template argument decuction from function argument types,
+for function templates.
+
+std::string inserter should delete the string it received, when it was
+returned by vaule.
+
+Select the best match when more than one method signature matches the
+argument types.
+
+Persuade stub functions not to pretend that returned pointers are
+actually the dereference of said pointers ... then clean up the mess
+that was caused by this being the case.
+
+A pointer type
+
+An array type
+
+Python help for GenericFunctions 
+
+Method dispatch preselection 
+
+Class metaclass ?
+
+Namespace metaclass ?
+
+Lazy scope tree building.
+

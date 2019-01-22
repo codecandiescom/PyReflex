@@ -1,0 +1,35 @@
+package Pyreflex
+
+use Reflex     v*  Dictionary
+use Python     v*  LCG_Interfaces
+
+#apply_pattern lcg_python_module name=reflex files=..\gensrc\generated_reflex.cpp
+
+library reflex ..\gensrc\generated_reflex.cpp
+macro reflex_shlibflags  "$(libraryshr_linkopts) $(use_linkopts)"
+
+
+path_remove PYTHONPATH "/Pyreflex/python" WIN32 "\Pyreflex\python"
+path_append PYTHONPATH "$(Pyreflex_root)/python"
+
+private
+
+use DictionaryGenerator v*  Dictionary
+
+apply_pattern lcg_dictionary dictionary=test_pyreflex \
+                             headerfiles=$(PYREFLEXROOT)/tests/dict/testdict.h 
+macro test_pyreflex_lcgdict_options  "--reflex --select $(PYREFLEXROOT)/tests/dict/testdict_selection.xml "
+
+#apply_pattern lcg_dictionary dictionary=pylcgdict_second \
+#                             headerfiles=$(PYLCGDICT2ROOT)/tests/dict/seconddict.h 
+
+action generate_reflex '"cd ..\gensrc & $(Python_home)\python" generate_reflex.py nobuild '
+macro_prepend constituents " generate_reflex "
+
+action move_reflex  "copy ..\$(tag)\reflex.dll ..\python\pyreflex\*"
+
+document installer install_modules ../$(tag)/reflex.dll install_dir=..\python\pyreflex
+                   
+apply_pattern lcg_test_python
+
+path_append PYTHONPATH "$(Pyreflex_root)/$(tag)"

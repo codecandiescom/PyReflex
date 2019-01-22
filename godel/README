@@ -1,0 +1,91 @@
+WHAT IS IT?
+===========
+
+An automatic generator of Python bindings to C++ libraries. Similar to
+SWIG and Boost.Python. Godel aims to
+
+* be lightweight,
+
+* be EXTREMELY simple to use,
+
+* generate run-time efficient bindings,
+
+* produce high-quality Python objects which look and feel natural in
+  Python.
+
+* integrate as many of the features of the C++ and Python languages
+  and provide a pleasant user interface: Templates, namespaces,
+  iterators and iterator protocols, special operators, pointers,
+  arrays, void*
+
+CAVEATS
+=======
+
+* Godel is still very much pre-alpha.
+
+* Godel only works with GCC. [The fuller picture: Godel currently
+  relies on C++ compilers which support the dynamic casting runtime
+  described in
+
+    http://www.codesourcery.com/cxx-abi/
+
+  so any compiler implementing this feature will do. We think we know
+  how to do it for MSVC, but haven't bothered yet.]
+
+* Godel requires gccxml. If you do not have gccxml installed on your
+  system, you will have to install it yourself. Get it from
+
+    http://gccxml.org
+
+  The installation procedure requires cmake. Installing both is
+  relatively painless these days, so give it a go.
+
+* Godel requires python2.4 or later.
+
+
+FEATURES
+========
+
+Godel is developed in a test-driven style. The files "testgodel.h" and
+"testgodel.py" should therefore provide an exhaustive demonstration of
+Godel's capabilities. We intend to _try_ to keep these files readable
+by the uninitiated, but can't promise anything.
+
+
+INSTALLATION
+============
+
+1) Install gccxml
+
+2) Obtain the files:
+
+     build_structure.py
+     generate_code.py
+     godelstuff.h
+     godelstuff.py
+     parse_headers.py
+
+by whatever means you wish. For example:
+
+  http://seal.cvs.cern.ch/cgi-bin/seal.cgi/seal/Scripting/Pyreflex/godel/godel.tar.gz?tarball=1
+
+
+USAGE
+=====
+
+    python2.4 generate_code <module name> <header file> [-l<lib file>]
+
+where 
+
+   <module name> is the name by which you wish the module to be
+                 known,
+
+   <header file> is the header of the library you are wrapping,
+
+   <lib file> is the library itself.
+
+If this command succeeds, you should be able to "import <module name>"
+in Python, in the local directory. The generated module has a run-time
+dependency on godelstuff.py.
+
+A more sophisticated user interface will be provided in due course.
